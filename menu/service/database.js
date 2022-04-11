@@ -71,12 +71,54 @@ const menu = [
     img: "./assets/item-9.jpeg",
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
+  {
+    id: 10,
+    title: "steak dinner",
+    category: "dinner",
+    price: 39.99,
+    img: "./assets/item-10.jpeg",
+    desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
+  },
 ];
 
-const sectionCenter = document.querySelector(".section-center");
-
 window.addEventListener("DOMContentLoaded", function () {
-  let displayMenu = menu.map(
+  displayMenuItems(menu);
+
+  const categories = menu.reduce(
+    function (values, item) {
+      if (!values.includes(item.category)) {
+        values.push(item.category);
+      }
+      return values;
+    },
+    ["all"]
+  );
+
+  console.log(categories);
+});
+
+const sectionCenter = document.querySelector(".section-center");
+const filterBtns = document.querySelectorAll(".filter-btn");
+
+filterBtns.forEach(function (btn) {
+  btn.addEventListener("click", (e) => {
+    const category = e.currentTarget.dataset.id;
+    const menuCategory = menu.filter(function (menuItem) {
+      // return menuItem.category === category;
+      if (menuItem.category === category) {
+        return menuItem;
+      }
+      if (category === "all") {
+        displayMenuItems(menu);
+      } else {
+        displayMenuItems(menuCategory);
+      }
+    });
+  });
+});
+
+function displayMenuItems(menuItems) {
+  let displayMenu = menuItems.map(
     (item) =>
       `<article class="menu-item">
         <img src=${item.img} class="photo" alt=${item.title} />
@@ -93,4 +135,4 @@ window.addEventListener("DOMContentLoaded", function () {
   displayMenu = displayMenu.join("");
 
   sectionCenter.innerHTML = displayMenu;
-});
+}
