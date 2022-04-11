@@ -90,5 +90,7 @@ window.addEventListener("DOMContentLoaded", function () {
       </article>`
   );
 
-  console.log(displayMenu);
+  displayMenu = displayMenu.join("");
+
+  sectionCenter.innerHTML = displayMenu;
 });
